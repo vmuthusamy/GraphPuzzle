@@ -87,6 +87,7 @@ public class NflCombination
                         for (List<Integer> recurseResult : recurseResults)
                         {
                             recurseResult.add(score);
+                            //This is needed to filter dups of same combination
                             Collections.sort(recurseResult);
                         }
                         results.addAll(recurseResults);
@@ -96,6 +97,55 @@ public class NflCombination
         }
 
         return results;
+    }
+
+    private static void preload ()
+    {
+        possibleScores.add(2);
+        possibleScores.add(3);
+        possibleScores.add(6);
+        possibleScores.add(7);
+        possibleScores.add(8);
+        scoreExplanation.put(2, "Safety");
+        scoreExplanation.put(3, "Field Goal");
+        scoreExplanation.put(6, "Touchdown");
+        scoreExplanation.put(7, "Touchdown and Extra Point Conversion");
+        scoreExplanation.put(8, "Touchdown and Two Point Conversion");
+
+    }
+
+    private static Set<Map<Integer, Integer>> generateScoreFrequencies (
+            final Set<List<Integer>> teamCombinations)
+    {
+
+        final Set<Map<Integer, Integer>> collectionOfScoreFrequencies = new HashSet<Map<Integer, Integer>>();
+
+        for (List<Integer> list : teamCombinations)
+        {
+            collectionOfScoreFrequencies.add(generateScoreFrequenciesForSingleList(list));
+        }
+
+        return collectionOfScoreFrequencies;
+    }
+
+    private static Map<Integer, Integer> generateScoreFrequenciesForSingleList (
+            final List<Integer> oneScoringCombination)
+    {
+        final Map<Integer, Integer> scoreFrequencies = new HashMap<Integer, Integer>();
+
+        for (final Integer key : oneScoringCombination)
+        {
+            if (!scoreFrequencies.containsKey(key))
+            {
+                scoreFrequencies.put(key, 1);
+            } else
+            {
+                int value = scoreFrequencies.get(key);
+                scoreFrequencies.put(key, ++value);
+            }
+        }
+
+        return scoreFrequencies;
     }
 
     private static String combineCombinations (final Set<List<Integer>> teamACombinations,
@@ -156,54 +206,5 @@ public class NflCombination
         }
 
         return outputBuilder.toString();
-    }
-
-    private static Set<Map<Integer, Integer>> generateScoreFrequencies (
-            final Set<List<Integer>> teamCombinations)
-    {
-
-        final Set<Map<Integer, Integer>> collectionOfScoreFrequencies = new HashSet<Map<Integer, Integer>>();
-
-        for (List<Integer> list : teamCombinations)
-        {
-            collectionOfScoreFrequencies.add(generateScoreFrequenciesForSingleList(list));
-        }
-
-        return collectionOfScoreFrequencies;
-    }
-
-    private static Map<Integer, Integer> generateScoreFrequenciesForSingleList (
-            final List<Integer> oneScoringCombination)
-    {
-        final Map<Integer, Integer> scoreFrequencies = new HashMap<Integer, Integer>();
-
-        for (final Integer key : oneScoringCombination)
-        {
-            if (!scoreFrequencies.containsKey(key))
-            {
-                scoreFrequencies.put(key, 1);
-            } else
-            {
-                int value = scoreFrequencies.get(key);
-                scoreFrequencies.put(key, ++value);
-            }
-        }
-
-        return scoreFrequencies;
-    }
-
-    private static void preload ()
-    {
-        possibleScores.add(2);
-        possibleScores.add(3);
-        possibleScores.add(6);
-        possibleScores.add(7);
-        possibleScores.add(8);
-        scoreExplanation.put(2, "Safety");
-        scoreExplanation.put(3, "Field Goal");
-        scoreExplanation.put(6, "Touchdown");
-        scoreExplanation.put(7, "Touchdown and Extra Point Conversion");
-        scoreExplanation.put(8, "Touchdown and Two Point Conversion");
-
     }
 }
