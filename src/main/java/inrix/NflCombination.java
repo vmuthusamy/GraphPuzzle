@@ -32,7 +32,6 @@ public class NflCombination
 {
 
     private static Map<Integer, String> scoreExplanation = new HashMap<Integer, String>();
-    private static Map<Integer, Integer> countForEachScoreCombinations = new HashMap<Integer, Integer>();
     private static final List<Integer> possibleScores = new ArrayList<Integer>();
 
     /**
@@ -75,7 +74,7 @@ public class NflCombination
             result.add(score);
             int currentAmount = matchScore - score;
             if (currentAmount >= 0)
-            { //only continue if we haven't overshot
+            {
                 if (currentAmount == 0)
                 {
                     results.add(result);
@@ -164,7 +163,6 @@ public class NflCombination
     {
 
         final Set<Map<Integer, Integer>> collectionOfScoreFrequencies = new HashSet<Map<Integer, Integer>>();
-        final Map<Integer, Integer> teamScoreFrequencies = new HashMap<Integer, Integer>();
 
         for (List<Integer> list : teamCombinations)
         {
