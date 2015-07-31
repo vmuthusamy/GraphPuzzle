@@ -162,30 +162,20 @@ public class NflCombination
         outputBuilder.append("Team A:");
         outputBuilder.append("\n");
 
-        for (Map<Integer, Integer> map : teamAFrequencies)
-        {
-            int count = 0;
-            for (Map.Entry<Integer, Integer> entry : map.entrySet())
-            {
-                count++;
-                if (entry.getValue() > 0)
-                {
-                    outputBuilder.append(entry.getValue());
-                    outputBuilder.append(" ");
-                    outputBuilder.append(scoreExplanation.get(entry.getKey()));
-                    if (count < map.size())
-                    {
-                        outputBuilder.append(",");
-                    }
-                }
-            }
-            outputBuilder.append("\n");
-        }
+        combineCombinationsForTeam(outputBuilder, teamAFrequencies);
 
         outputBuilder.append("Team B:");
         outputBuilder.append("\n");
 
-        for (Map<Integer, Integer> map : teamBFrequencies)
+        combineCombinationsForTeam(outputBuilder, teamBFrequencies);
+
+        return outputBuilder.toString();
+    }
+
+    private static void combineCombinationsForTeam (StringBuilder outputBuilder,
+            Set<Map<Integer, Integer>> teamFrequencies)
+    {
+        for (Map<Integer, Integer> map : teamFrequencies)
         {
             int count = 0;
             for (Map.Entry<Integer, Integer> entry : map.entrySet())
@@ -204,7 +194,5 @@ public class NflCombination
             }
             outputBuilder.append("\n");
         }
-
-        return outputBuilder.toString();
     }
 }

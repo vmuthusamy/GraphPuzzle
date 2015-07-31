@@ -32,7 +32,7 @@ public class NflCombinationTest
     public void testOneScore ()
     {
         System.out.println(NflCombination.generatePossibleScoringCombinationsForEachTeam("7-3"));
-        System.out.println(NflCombination.generatePossibleScoringCombinationsForEachTeam("21-3"));
+        System.out.println(NflCombination.generatePossibleScoringCombinationsForEachTeam("0-0"));
 
     }
 }
